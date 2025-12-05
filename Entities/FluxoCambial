@@ -1,0 +1,71 @@
+{
+  "name": "FluxoCambial",
+  "type": "object",
+  "properties": {
+    "regiao": {
+      "type": "string",
+      "enum": [
+        "Norte",
+        "Nordeste",
+        "Centro-Oeste",
+        "Sudeste",
+        "Sul"
+      ],
+      "description": "Regi\u00e3o do Brasil"
+    },
+    "estado": {
+      "type": "string",
+      "description": "Estado brasileiro"
+    },
+    "setor": {
+      "type": "string",
+      "enum": [
+        "Combust\u00edveis",
+        "Minera\u00e7\u00e3o",
+        "Agroneg\u00f3cio",
+        "Manufatura",
+        "Servi\u00e7os"
+      ],
+      "description": "Setor econ\u00f4mico"
+    },
+    "tipo_operacao": {
+      "type": "string",
+      "enum": [
+        "Exporta\u00e7\u00e3o",
+        "Importa\u00e7\u00e3o"
+      ],
+      "description": "Tipo de opera\u00e7\u00e3o cambial"
+    },
+    "valor_usd": {
+      "type": "number",
+      "description": "Valor em USD"
+    },
+    "ano": {
+      "type": "integer",
+      "description": "Ano da opera\u00e7\u00e3o"
+    },
+    "mes": {
+      "type": "integer",
+      "description": "M\u00eas da opera\u00e7\u00e3o"
+    },
+    "score_anomalia": {
+      "type": "number",
+      "description": "Score de anomalia (0-100) calculado pelo modelo ML"
+    },
+    "is_anomalia": {
+      "type": "boolean",
+      "description": "Flag indicando se \u00e9 uma anomalia detectada"
+    },
+    "variacao_percentual": {
+      "type": "number",
+      "description": "Varia\u00e7\u00e3o percentual em rela\u00e7\u00e3o ao per\u00edodo anterior"
+    }
+  },
+  "required": [
+    "regiao",
+    "estado",
+    "setor",
+    "valor_usd",
+    "ano"
+  ]
+}
