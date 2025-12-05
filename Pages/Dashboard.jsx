@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
+import MapaBrasil from "../Components/dashboard/MapaBrasil.jsx";
+import GraficoTendencia from "../Components/dashboard/GraficoTendencia.jsx";
 import { 
   DollarSign, 
   AlertTriangle, 
@@ -124,34 +126,6 @@ const CardEstatistica = ({ titulo, valor, variacao, icone: Icon, corIcone, forma
         </motion.div>
     );
 };
-
-const MapaBrasil = ({ dadosRegiao, onRegiaoClick, regiaoSelecionada }) => (
-    <div className="bg-slate-50 p-6 flex flex-col items-center justify-center h-[400px]">
-        <h4 className="text-lg font-semibold text-slate-600">[Mapa do Brasil Placeholder]</h4>
-        <p className="text-sm text-slate-500 mt-2">Distribuição de Risco. Selecione uma região:</p>
-        <div className="flex flex-wrap gap-2 mt-4 justify-center">
-            {Object.keys(dadosRegiao).map(regiao => (
-                <button
-                    key={regiao}
-                    onClick={() => onRegiaoClick(regiao)}
-                    className={`px-3 py-1 text-sm rounded-full transition-colors ${regiao === regiaoSelecionada ? 'bg-blue-600 text-white shadow-md' : 'bg-slate-200 text-slate-700 hover:bg-slate-300'}`}
-                >
-                    {regiao} {regiaoSelecionada === regiao ? '✓' : ''}
-                </button>
-            ))}
-        </div>
-    </div>
-);
-const GraficoTendencia = ({ titulo, dados }) => (
-    <div className="bg-white rounded-2xl shadow-sm border border-slate-100 p-6 h-[468px]">
-        <h3 className="font-semibold text-slate-800 mb-4">{titulo}</h3>
-        <p className="text-sm text-slate-500">[Gráfico de Linhas: Volume vs Anomalia - Requer biblioteca como Recharts/D3]</p>
-        <div className="mt-8 text-center text-slate-300 text-6xl">📈</div>
-        <div className="mt-4 text-sm text-slate-500">
-            Último valor (Dez/23): {formatarValorSimplificado(dados[dados.length - 1].valor)}
-        </div>
-    </div>
-);
 const RankingRegioes = ({ regioes, onRegiaoClick }) => (
     <div className="bg-white rounded-2xl shadow-sm border border-slate-100 p-6">
         <h3 className="font-semibold text-slate-800 mb-4 flex items-center gap-2">
@@ -205,17 +179,6 @@ const DetalhesRegiao = ({ regiao, dados, onClose }) => (
             </a>
         </div>
     </motion.div>
-);
-// Placeholder para RelatorioIntegrado
-const RelatorioIntegrado = ({ dadosAtuais, rankingRegioes, setor, ano }) => (
-    <div className="bg-white rounded-2xl shadow-sm border border-slate-100 p-6 h-[468px] flex flex-col justify-center items-center">
-        <h3 className="font-semibold text-slate-800 mb-4">Relatório Integrado Anual - Setor {setor} ({ano})</h3>
-        <p className="text-center text-slate-500">
-            [Conteúdo do Relatório: Aqui você teria um componente complexo de tabela, texto e gráficos. <br/> 
-            Maior Risco: {rankingRegioes[0]?.nome} ({rankingRegioes[0]?.score?.toFixed(1)}% Score)
-        </p>
-        <div className="mt-8 text-center text-slate-300 text-6xl">📄</div>
-    </div>
 );
 // Componente FiltrosAnalise (Atualizado para incluir todos os setores)
 const FiltrosAnalise = ({ filtros, setFiltros, onAplicar }) => {
@@ -406,11 +369,6 @@ export default function Dashboard() {
     setTimeout(() => setCarregando(false), 800);
   };
 
-  const handleExportarRelatorio = () => {
-    // Simulação de exportação
-    alert('Relatório exportado com sucesso!');
-  };
-
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-slate-100">
       {/* Header */}
@@ -441,14 +399,6 @@ export default function Dashboard() {
               >
                 <RefreshCw className={`w-4 h-4 ${carregando ? 'animate-spin' : ''}`} />
                 Atualizar
-              </Button>
-              <Button 
-                size="sm"
-                onClick={handleExportarRelatorio}
-                className="gap-2 bg-slate-800 hover:bg-slate-900"
-              >
-                <Download className="w-4 h-4" />
-                Exportar Relatório
               </Button>
             </div>
           </div>
@@ -512,7 +462,6 @@ export default function Dashboard() {
                 <TabsList className="bg-slate-100">
                   <TabsTrigger value="mapa" activeTab={visualizacao} setActiveTab={setVisualizacao}>Mapa de Risco</TabsTrigger>
                   <TabsTrigger value="tendencia" activeTab={visualizacao} setActiveTab={setVisualizacao}>Tendência Histórica</TabsTrigger>
-                  <TabsTrigger value="relatorio" activeTab={visualizacao} setActiveTab={setVisualizacao}>Relatório</TabsTrigger>
                 </TabsList>
               </Tabs>
             </div>
@@ -543,16 +492,6 @@ export default function Dashboard() {
                 key={filtros.setor + '-tendencia'}
                 dados={dadosAtuais.tendencia}
                 titulo={`Tendência Histórica - ${filtros.setor} (${filtros.ano})`}
-              />
-            )}
-            
-            {visualizacao === 'relatorio' && (
-              <RelatorioIntegrado
-                key={filtros.setor + '-relatorio'}
-                dadosAtuais={dadosAtuais}
-                rankingRegioes={rankingRegioes}
-                setor={filtros.setor}
-                ano={filtros.ano}
               />
             )}
 
