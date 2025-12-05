@@ -495,6 +495,7 @@ export default function Dashboard() {
               />
             )}
 
+
             {/* Detalhes da Região selecionada */}
             {regiaoSelecionada && dadosAtuais.regioes[regiaoSelecionada] && (
               <DetalhesRegiao
@@ -539,32 +540,7 @@ export default function Dashboard() {
               </div>
             </motion.div>
 
-            {/* Info ML */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.7 }}
-              className="mt-4 bg-slate-800 rounded-2xl p-5 text-white"
-            >
-              <h4 className="font-semibold mb-2 flex items-center gap-2">
-                <Activity className="w-4 h-4 text-blue-400" />
-                Modelo de Machine Learning
-              </h4>
-              <p className="text-slate-300 text-sm mb-3">
-                Utilizando Random Forest e Isolation Forest para detecção de anomalias
-                em fluxos cambiais.
-              </p>
-              <div className="grid grid-cols-2 gap-2 text-xs">
-                <div className="bg-slate-700 rounded-lg p-2">
-                  <p className="text-slate-400">Precisão</p>
-                  <p className="font-bold text-green-400">94.7%</p>
-                </div>
-                <div className="bg-slate-700 rounded-lg p-2">
-                  <p className="text-slate-400">Recall</p>
-                  <p className="font-bold text-blue-400">91.2%</p>
-                </div>
-              </div>
-            </motion.div>
+ 
           </div>
         </div>
       </main>
